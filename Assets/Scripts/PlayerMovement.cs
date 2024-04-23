@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Rigidbody2D body;
-    [SerializeField] private float speed = 5f;
+    [SerializeField] private float speed;
+    [SerializeField] private float jumpHeight = 5f;
 
-    private Vector2 direction = Vector2.zero;
+    private Rigidbody2D body;
     
     private void Awake()
     {
@@ -16,12 +16,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        body.velocity = new Vector2(direction.x, direction.y);
+        body.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, body.velocity.y);
+        if(Input.GetKey(KeyCode.Space))
+            body.velocity = new Vector2(body.velocity.x, jumpHeight);
     }
     
-    private void Move(float x, float z)
-    {
-        body.velocity = new Vector3(x * speed, body.velocity.y, z * speed);
-    }
-
 }
